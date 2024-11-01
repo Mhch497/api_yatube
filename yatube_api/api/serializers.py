@@ -5,7 +5,6 @@ from posts.models import Comment, Group, Post
 
 class CommentSerializer(serializers.ModelSerializer):
 
-    # author = serializers.StringRelatedField(read_only=True)
     author = serializers.SlugRelatedField(
         read_only=True, slug_field='username'
     )
@@ -18,19 +17,13 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
 
-    # author = serializers.StringRelatedField(read_only=True)
     author = serializers.SlugRelatedField(
         read_only=True, slug_field='username'
     )
-    # comments = serializers.StringRelatedField(
-    #     many=True,
-    #     required=False
-    # )
 
     class Meta:
         fields = (
-            'id', 'author', 'text', 'pub_date', 'image', 'group'
-            )
+            'id', 'author', 'text', 'pub_date', 'image', 'group')
         model = Post
 
 
@@ -38,5 +31,3 @@ class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         fields = ('id', 'title', 'slug', 'description')
         model = Group
-
-

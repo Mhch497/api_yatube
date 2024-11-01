@@ -29,12 +29,12 @@ class CommentViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         post_id = self.kwargs.get("post_id")
         return get_object_or_404(Post, pk=post_id).comments.all()
-    
+
     def perform_create(self, serializer):
         post_id = self.kwargs.get("post_id")
         serializer.save(author=self.request.user,
                         post=get_object_or_404(Post, pk=post_id))
-        
+
     def perform_destroy(self, instance):
         if instance.author != self.request.user:
             return Response(status=status.HTTP_403_FORBIDDEN)
@@ -45,7 +45,3 @@ class CommentViewSet(viewsets.ModelViewSet):
         if post.author != request.user:
             return Response(status=status.HTTP_403_FORBIDDEN)
         return super(CommentViewSet, self).update(request, *args, **kwargs)
-
-
-    
-
